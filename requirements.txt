@@ -1,5 +1,4 @@
 torch
 tensorboardX
-cv2
 numpy
 gym
