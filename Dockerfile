@@ -1,4 +1,5 @@
-FROM python:3.6
+# FROM python:3.6
+FROM ubuntu:18.04
 
 # set the working directory
 RUN ["mkdir", "deep_q_networks"]
