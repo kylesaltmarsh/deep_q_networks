@@ -2,3 +2,4 @@ torch
 tensorboardX
 numpy
 gym
+opencv-python
