@@ -38,7 +38,7 @@ TEST_FREQUENCY = 10
 
 ENV_NAME = "PongNoFrameskip-v4"
 SAVE_VIDEO = True
-DEVICE = 'cpu' # or 'cuda'
+DEVICE = 'cuda' # or 'cpup'
 SUMMARY_WRITER = True
 
 LOG_DIR = '/opt/ml/model/' # 'content/runs'
