@@ -3,3 +3,4 @@ tensorboardX
 numpy
 gym
 opencv-python
+gym[atari]
