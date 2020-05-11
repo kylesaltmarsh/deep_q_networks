@@ -16,6 +16,15 @@ from tensorboardX import SummaryWriter
 import atari_wrappers
 from agent import DQNAgent
 import utils
+import json
+
+# Hyperparamters /opt/ml/input/config
+f = open('/opt/ml/input/config/hyperparamaters.json',) 
+hyperparameters = json.load(f) 
+f.close() 
+print('-------------------------------------')
+print(hyperparameters)
+print('-------------------------------------')
 
 DQN_HYPERPARAMS = {
 	'dueling': False,
@@ -33,7 +42,7 @@ DQN_HYPERPARAMS = {
 }
 
 BATCH_SIZE = 32
-MAX_N_GAMES = 8 # 3000
+MAX_N_GAMES = 3000 # 3000
 TEST_FREQUENCY = 10
 
 ENV_NAME = "PongNoFrameskip-v4"
