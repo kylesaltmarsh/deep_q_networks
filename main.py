@@ -19,7 +19,7 @@ import utils
 import json
 
 # Hyperparamters /opt/ml/input/config
-f = open('/opt/ml/input/config/hyperparamaters.json',) 
+f = open('/opt/ml/input/config/hyperparameters.json',) 
 hyperparameters = json.load(f) 
 f.close() 
 print('-------------------------------------')
