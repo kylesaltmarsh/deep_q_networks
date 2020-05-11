@@ -159,6 +159,8 @@ class ScaledFloatFrame(gym.ObservationWrapper):
 def make_env(env_name, fire=True):
     env = gym.make(env_name)
     env = MaxAndSkipEnv(env) ## Return only every `skip`-th frame
+    # TODO delete
+    env._max_episode_steps = 10000
     if fire:
        env = FireResetEnv(env) ## Fire at the beginning
     env = WarpFrame(env) ## Reshape image
