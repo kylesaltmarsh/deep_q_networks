@@ -6,6 +6,7 @@ RUN apt-get update \
   && cd /usr/local/bin \
   && ln -s /usr/bin/python3 python \
   && pip3 install --upgrade pip
+  && apt-get install ffmpeg
 
 # set the working directory
 RUN ["mkdir", "deep_q_networks"]
