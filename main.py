@@ -29,7 +29,7 @@ if args.compute == 'local':
 	f = open(os.getcwd()+'/hyperparameters.json',) 
 	hyperparameters = json.load(f) 
 	f.close() 
-	hyperparameters['path'] = os.getcwd()
+	hyperparameters['path'] = os.getcwd() + "content/runs"
 elif args.compute == 'sagemaker':
 	f = open('/opt/ml/input/config/hyperparameters.json',) 
 	hyperparameters = json.load(f) 
@@ -64,7 +64,7 @@ SAVE_VIDEO = True
 DEVICE = hyperparameters['DEVICE'] # 'cuda' or 'cpu'
 SUMMARY_WRITER = True
 
-LOG_DIR = hyperparameters['LOG_DIR'] # 'content/runs' '/opt/ml/model/'
+LOG_DIR = hyperparameters['path'] # 'content/runs' '/opt/ml/model/'
 name = '_'.join([str(k)+'.'+str(v) for k,v in DQN_HYPERPARAMS.items()])
 name = 'prv'
 
