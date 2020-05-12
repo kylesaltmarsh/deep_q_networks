@@ -1,5 +1,4 @@
 FROM python:3.6
-# FROM ubuntu:18.04
 
 RUN apt-get -y update
 RUN apt-get -y upgrade
@@ -26,4 +25,3 @@ COPY "utils.py" .
 # provision environment
 RUN ["chmod", "+x", "./run.sh"]
 ENTRYPOINT ["./run.sh"]
-CMD ["train"]

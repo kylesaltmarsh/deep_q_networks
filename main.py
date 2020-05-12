@@ -17,14 +17,28 @@ import atari_wrappers
 from agent import DQNAgent
 import utils
 import json
+import argparse
+import os
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--compute", help="local or sagemaker", default='local', type=str)
+args = parser.parse_args()
 
 # Hyperparamters /opt/ml/input/config
-f = open('/opt/ml/input/config/hyperparameters.json',) 
-hyperparameters = json.load(f) 
-f.close() 
-print('-------------------------------------')
+if args.compute == 'local':
+	f = open(os.getcwd()+'/hyperparameters.json',) 
+	hyperparameters = json.load(f) 
+	f.close() 
+	hyperparameters['path'] = os.getcwd()
+elif args.compute == 'sagemaker':
+	f = open('/opt/ml/input/config/hyperparameters.json',) 
+	hyperparameters = json.load(f) 
+	f.close()
+	hyperparameters['path'] = "/opt/ml/model/"
+
+print('---------------------------------------------------------------------')
 print(hyperparameters)
-print('-------------------------------------')
+print('---------------------------------------------------------------------')
 
 DQN_HYPERPARAMS = {
 	'dueling': False,
@@ -42,15 +56,15 @@ DQN_HYPERPARAMS = {
 }
 
 BATCH_SIZE = 32
-MAX_N_GAMES = 3000 # 3000
+MAX_N_GAMES = 32 # 3000
 TEST_FREQUENCY = 10
 
 ENV_NAME = "PongNoFrameskip-v4"
 SAVE_VIDEO = True
-DEVICE = 'cuda' # or 'cpup'
+DEVICE = hyperparameters['DEVICE'] # 'cuda' or 'cpu'
 SUMMARY_WRITER = True
 
-LOG_DIR = '/opt/ml/model/' # 'content/runs'
+LOG_DIR = hyperparameters['LOG_DIR'] # 'content/runs' '/opt/ml/model/'
 name = '_'.join([str(k)+'.'+str(v) for k,v in DQN_HYPERPARAMS.items()])
 name = 'prv'
 
@@ -60,13 +74,13 @@ if __name__ == '__main__':
 	env = atari_wrappers.make_env(ENV_NAME)
 	if SAVE_VIDEO:
 		# save the video of the games
-		env = gym.wrappers.Monitor(env, "/opt/ml/model/main-"+ENV_NAME, force=True)
+		env = gym.wrappers.Monitor(env, LOG_DIR + "/main-"+ENV_NAME, force=True)
+	
+	# starting environment state
 	obs = env.reset()
 
 	# TensorBoard
 	writer = SummaryWriter(log_dir=LOG_DIR+'/'+name + str(time.time())) if SUMMARY_WRITER else None
-
-	print('Hyperparams:', DQN_HYPERPARAMS)
 
 	# create the agent
 	agent = DQNAgent(env, device=DEVICE, summary_writer=writer, hyperparameters=DQN_HYPERPARAMS)
@@ -96,8 +110,8 @@ if __name__ == '__main__':
 			agent.print_info()
 			agent.reset_stats()
 
-			#if n_games % TEST_FREQUENCY == 0:
-			#	print('Test mean:', utils.test_game(env, agent, 1))
+			if n_games % TEST_FREQUENCY == 0:
+				print('Test mean:', utils.test_game(env, agent, 1))
 
 			obs = env.reset()
 
@@ -107,7 +121,7 @@ if __name__ == '__main__':
 
 
 # TODO kyle
-torch.save(agent.cc.target_nn.state_dict(),'/opt/ml/model/model.pt')
+# torch.save(agent.cc.target_nn.state_dict(),'/opt/ml/model/model.pt')
 
 # agent.cc.target_nn.load_state_dict(torch.load('model.pt'))
 # agent.cc.target_nn.eval()
