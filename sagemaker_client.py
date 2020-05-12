@@ -18,11 +18,14 @@ bucket_name = 'sagemaker-demo-kyle'
 prefix = 'deep-q-networks'
 model_output = "s3://{}/{}/model".format(bucket_name, prefix)
 # create an estimator
+
+hyperparameters = {"DEVICE": "cpu"} 
+
 clf = sagemaker.estimator.Estimator(image,
-                               role, 1, 'ml.p2.16xlarge', # ml.c4.2xlarge ml.p2.xlarge ml.p2.8xlarge ml.p2.16xlarge
+                               role, 1, 'ml.c5.9xlarge', # ml.c4.2xlarge ml.p2.xlarge ml.p2.8xlarge ml.p2.16xlarge ml.c5.9xlarge
                                output_path=model_output,
                                sagemaker_session=sess,
-                               hyperparameters = {'DEVICE': 'cuda'})
+                               hyperparameters = hyperparameters)
 # run entry point
 clf.fit()
 

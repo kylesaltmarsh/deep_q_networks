@@ -1,1 +1,4 @@
-{"DEVICE": "cpu"}
+{"DEVICE": "cpu",
+"BATCH_SIZE": 32,
+"MAX_N_GAMES": 100,
+"TEST_FREQUENCY": 10}

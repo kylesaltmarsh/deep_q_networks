@@ -29,7 +29,7 @@ if args.compute == 'local':
 	f = open(os.getcwd()+'/hyperparameters.json',) 
 	hyperparameters = json.load(f) 
 	f.close() 
-	hyperparameters['path'] = os.getcwd() + "content/runs"
+	hyperparameters['path'] = os.getcwd() + "/content/runs"
 elif args.compute == 'sagemaker':
 	f = open('/opt/ml/input/config/hyperparameters.json',) 
 	hyperparameters = json.load(f) 
@@ -55,9 +55,9 @@ DQN_HYPERPARAMS = {
 	'n_iter_update_target': 1000
 }
 
-BATCH_SIZE = 32
-MAX_N_GAMES = 32 # 3000
-TEST_FREQUENCY = 10
+BATCH_SIZE = hyperparameters['BATCH_SIZE']
+MAX_N_GAMES = hyperparameters['MAX_N_GAMES']
+TEST_FREQUENCY = hyperparameters['TEST_FREQUENCY']
 
 ENV_NAME = "PongNoFrameskip-v4"
 SAVE_VIDEO = True
