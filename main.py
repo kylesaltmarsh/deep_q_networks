@@ -55,9 +55,11 @@ DQN_HYPERPARAMS = {
 	'n_iter_update_target': 1000
 }
 
-BATCH_SIZE = hyperparameters['BATCH_SIZE']
-MAX_N_GAMES = hyperparameters['MAX_N_GAMES']
-TEST_FREQUENCY = hyperparameters['TEST_FREQUENCY']
+# could load the local version and cast the types to the passed version
+
+BATCH_SIZE = int(hyperparameters['BATCH_SIZE'])
+MAX_N_GAMES = int(hyperparameters['MAX_N_GAMES'])
+TEST_FREQUENCY = int(hyperparameters['TEST_FREQUENCY'])
 
 ENV_NAME = "PongNoFrameskip-v4"
 SAVE_VIDEO = True
